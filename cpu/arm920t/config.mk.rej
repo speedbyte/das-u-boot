@@ -1,0 +1,21 @@
+***************
+*** 20,27 ****
+  # Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+  # MA 02111-1307 USA
+  #
+  
+  PLATFORM_RELFLAGS += -fno-strict-aliasing  -fno-common -ffixed-r8 \
+- 	-mshort-load-bytes -msoft-float
+  
+- PLATFORM_CPPFLAGS += -mapcs-32 -march=armv4
+--- 20,29 ----
+  # Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+  # MA 02111-1307 USA
+  #
++ # Modified for  scratchbox-toolchain 0.9.8.5  arm-linux-gcc3.4.cs-glibc2.3-nofpu compiler 
++ # by Doerte Waldoestl, Ident Technologies GmbH <waldoestl@identtechnologies.de>
+  
+  PLATFORM_RELFLAGS += -fno-strict-aliasing  -fno-common -ffixed-r8 \
++ 	                 -msoft-float
+  
++ PLATFORM_CPPFLAGS += -march=armv4t -mthumb-interwork

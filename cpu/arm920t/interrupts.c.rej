@@ -1,0 +1,32 @@
+***************
+*** 160,168 ****
+  	bad_mode ();
+  }
+  
+  void do_irq (struct pt_regs *pt_regs)
+  {
+  	printf ("interrupt request\n");
+  	show_regs (pt_regs);
+  	bad_mode ();
+  }
+--- 160,179 ----
+  	bad_mode ();
+  }
+  
++ #if defined (CONFIG_AT91RM9200) && defined (CONFIG_MMC)
++ extern void AT91F_MCI_Handler(void);
++ void do_irq (struct pt_regs *pt_regs)
++ {
++ 	/* FIXME there is no interupt management - but up to now we 
++ 	   have only one interrupt type raised by the MCI interface */
++ 	AT91F_MCI_Handler();
++ }
++ #else
+  void do_irq (struct pt_regs *pt_regs)
+  {
+  	printf ("interrupt request\n");
+  	show_regs (pt_regs);
+  	bad_mode ();
++ 
+  }
++ #endif
