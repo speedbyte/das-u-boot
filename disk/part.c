@@ -127,8 +127,8 @@ void dev_print (block_dev_desc_t *dev_desc)
      (CONFIG_COMMANDS & CFG_CMD_SCSI)	|| \
      (CONFIG_COMMANDS & CFG_CMD_USB)	|| \
      defined(CONFIG_SYSTEMACE)          || \
-     defined(CONFIG_MMC)          )
-
+     defined(CONFIG_MMC)	)
+	
 #if defined(CONFIG_MAC_PARTITION) || \
     defined(CONFIG_DOS_PARTITION) || \
     defined(CONFIG_ISO_PARTITION) || \

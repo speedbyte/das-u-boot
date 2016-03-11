@@ -158,18 +158,15 @@ void do_fiq (struct pt_regs *pt_regs)
 	show_regs (pt_regs);
 	bad_mode ();
 }
-
-#if defined (CONFIG_AT91RM9200) && defined (CONFIG_MMC)
+#if defined ( CONFIG_AT91RM9200 )  && defined (CONFIG_MMC)
 extern void AT91F_MCI_Handler(void);
- void do_irq (struct pt_regs *pt_regs)
- {
- 	/* FIXME there is no interupt management - but up to now we
- 	   have only one interrupt type raised by the MCI interface */
- 	AT91F_MCI_Handler();
- }
+void do_irq (struct pt_regs *pt_regs)
+{
+	AT91F_MCI_Handler();
+}
 #else
- void do_irq (struct pt_regs *pt_regs)
- {
+void do_irq (struct pt_regs *pt_regs)
+{
 #if defined (CONFIG_USE_IRQ) && defined (CONFIG_ARCH_INTEGRATOR)
 	/* ASSUMED to be a timer interrupt  */
 	/* Just clear it - count handled in */
@@ -180,5 +177,5 @@ extern void AT91F_MCI_Handler(void);
 	show_regs (pt_regs);
 	bad_mode ();
 #endif
- }
+}
 #endif

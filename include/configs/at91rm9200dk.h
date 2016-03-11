@@ -1,7 +1,5 @@
 /*
  * Rick Bronson <rick@efn.org>
- * Modified for MMC/SD Support by Doerte Waldoestl(DW) 
- * < waldoestl@identtechnologies.de>
  *
  * Configuation settings for the AT91RM9200DK board.
  *
@@ -37,24 +35,13 @@
 #define CONFIG_ARM920T		1	/* This is an ARM920T Core	*/
 #define CONFIG_AT91RM9200	1	/* It's an Atmel AT91RM9200 SoC	*/
 #define CONFIG_AT91RM9200DK	1	/* on an AT91RM9200DK Board	*/
-/*#undef  CONFIG_USE_IRQ */		/* for MMC/SD we need it (DW) we don't need IRQ/FIQ stuff	*/
+//#undef  CONFIG_USE_IRQ		/* we don't need IRQ/FIQ stuff	*/
 #define USE_920T_MMU		1
 
 #define CONFIG_CMDLINE_TAG	1	/* enable passing of ATAGs	*/
 #define CONFIG_SETUP_MEMORY_TAGS 1
 #define CONFIG_INITRD_TAG	1
-
-/* Options for MMC/SD Card */
-#define CONFIG_USE_IRQ			1
-#define CONFIG_DOS_PARTITION	1
-#define CONFIG_MMC				1
-#define CONFIG_SUPPORT_VFAT		1
-#define CFG_MMC_BASE			0xFFFB4000	/* From AT91RM9200.h*/
-#define CFG_MMC_BLOCKSIZE		512
-#define CONFIG_STACKSIZE_IRQ (4*1024) /* Unsure if to big or to small*/
-#define CONFIG_STACKSIZE_FIQ (4*1024) /* Unsure if to big or to small*/
-
-
+#define CONFIG_SKIP_LOWLEVEL_INIT	1
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
 #define CFG_USE_MAIN_OSCILLATOR		1
 /* flash */
@@ -97,7 +84,15 @@
 /*
  * Hardware drivers
  */
-
+//MMC
+#define CONFIG_MMC	1
+#define CONFIG_USE_IRQ	1
+#define CONFIG_SUPPORT_VFAT	1
+#define CONFIG_DOS_PARTITION	1
+#define CFG_MMC_BASE	0xFFFB4000
+#define CFG_MMC_BLOCKSIZE	512
+#define CONFIG_STACKSIZE_IRQ        (0x40)
+#define CONFIG_STACKSIZE_FIQ        (0x40) 
 /* define one of these to choose the DBGU, USART0  or USART1 as console */
 #define CONFIG_DBGU
 #undef CONFIG_USART0
@@ -110,18 +105,16 @@
 #define CONFIG_BOOTDELAY      3
 /* #define CONFIG_ENV_OVERWRITE	1 */
 
-#define CONFIG_COMMANDS	(CONFIG_CMD_DFL | CFG_CMD_MMC | CFG_CMD_FAT )
-/* by DW
 #define CONFIG_COMMANDS		\
 		       ((CONFIG_CMD_DFL | CFG_CMD_MII |\
-			CFG_CMD_DHCP ) & \
+			CFG_CMD_DHCP | CFG_CMD_MMC | CFG_CMD_FAT ) & \
 		      ~(CFG_CMD_BDI | \
 			CFG_CMD_IMI | \
 			CFG_CMD_AUTOSCRIPT | \
 			CFG_CMD_FPGA | \
 			CFG_CMD_MISC | \
 			CFG_CMD_LOADS ))
-*/
+
 /* this must be included AFTER the definition of CONFIG_COMMANDS (if any) */
 #include <cmd_confdefs.h>
 
@@ -212,7 +205,7 @@
 
 #define CFG_BAUDRATE_TABLE	{115200 , 19200, 38400, 57600, 9600 }
 
-#define CFG_PROMPT		"U-Boot> "	/* Monitor Command Prompt */
+#define CFG_PROMPT		"U-Boot-SDRAM> "	/* Monitor Command Prompt */
 #define CFG_CBSIZE		256		/* Console I/O Buffer Size */
 #define CFG_MAXARGS		16		/* max number of command args */
 #define CFG_PBSIZE		(CFG_CBSIZE+sizeof(CFG_PROMPT)+16) /* Print Buffer Size */
@@ -242,9 +235,8 @@ struct bd_info_ext {
 
 #define CONFIG_STACKSIZE	(32*1024)	/* regular stack */
 
-/* by DW
 #ifdef CONFIG_USE_IRQ
-#error CONFIG_USE_IRQ not supported
+//#error CONFIG_USE_IRQ not supported
 #endif
-*/
+
 #endif
