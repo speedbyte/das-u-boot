@@ -1,0 +1,1 @@
+the file in u-boot.gz is same as u-boot.bin
